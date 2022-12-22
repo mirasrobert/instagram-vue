@@ -22,3 +22,8 @@ body {
   align-items: center;
   height: 100vh;
 }
+
+.profile-img-wrapper {
+  width: 130px;
+  height: 130px;
+}

@@ -1,0 +1,52 @@
+<template>
+  <Navbar />
+  <Container>
+    <div class="flex justify-center mt-16">
+      <div class="grid grid-cols-[400px_minmax(700px,_1fr)_0px] gap-0">
+        <div class="w-full flex justify-center">
+          <div class="profile-img-wrapper">
+            <img
+              class="rounded-full w-full h-full object-cover"
+              src="https://randomuser.me/api/portraits/men/89.jpg"
+              alt="dp"
+            />
+          </div>
+        </div>
+        <div class="w-full">
+          <div class="flex space-x-3 mb-5">
+            <p class="text-4xl">jordan</p>
+            <button
+              type="submit"
+              class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-3 text-center"
+            >
+              Follow
+            </button>
+          </div>
+          <div class="flex space-x-6 mb-5">
+            <p><span class="font-bold"> 1,048 </span> posts</p>
+            <p><span class="font-bold"> 1k </span> followers</p>
+            <p><span class="font-bold"> 22 </span> following</p>
+          </div>
+          <div>
+            <p>
+              <span class="font-bold">Jordan A.</span> Graphic designer and
+              photographer :)
+            </p>
+            <p class="text-sm font-semibold text-blue-700">www.website.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+  <Posts />
+</template>
+
+<script>
+import Container from '../../components/Container.vue'
+import Navbar from '../../components/Navbar.vue'
+import Posts from './Posts.vue'
+
+export default { components: { Navbar, Container, Posts } }
+</script>
+
+<style></style>
