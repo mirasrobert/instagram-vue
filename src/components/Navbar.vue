@@ -54,7 +54,10 @@
               />
             </svg>
           </button>
-          <router-link :to="{ name: 'profile', params: { id: user.id } }">
+          <router-link
+            v-if="user"
+            :to="{ name: 'profile', params: { id: user.username } }"
+          >
             <img
               :src="user && user.avatar"
               alt=""
@@ -86,8 +89,7 @@ export default {
 
     // Dispatch an action from vuex
     const onLogout = () => {
-      store.dispatch('logout')
-      router.push('/login')
+      store.dispatch('logout', router)
     }
     // Get a data from the state getters
     const user = computed(() => store.getters.user)

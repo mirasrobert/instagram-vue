@@ -3,6 +3,7 @@ import Home from '../pages/Home.vue'
 import Login from '../pages/Auth/Login.vue'
 import Register from '../pages/Auth/Register.vue'
 import Profile from '../pages/Profile/Profile.vue'
+import AddPost from '../pages/Post/AddPost.vue'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/profiles/:id',
     name: 'profile',
     component: Profile,
+  },
+  {
+    path: '/posts/create',
+    name: 'posts.create',
+    component: AddPost,
   },
 ]
 

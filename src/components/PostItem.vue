@@ -3,7 +3,7 @@
     <div class="post-item-wrapper">
       <a href="#">
         <img
-          src="https://images.pexels.com/photos/13999202/pexels-photo-13999202.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          :src="backend_uri + post.image.url"
           alt=""
           class="w-full h-full object-cover"
         />
@@ -13,8 +13,18 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   name: 'PostItem',
+  props: ['post'],
+  setup() {
+    const backend_uri = `${import.meta.env.VITE_API_URI}`
+
+    return {
+      backend_uri,
+    }
+  },
 }
 </script>
 

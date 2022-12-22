@@ -104,10 +104,13 @@ const actions = {
     }
   },
 
-  logout({ commit }) {
+  logout({ commit }, router) {
     return axios.post(`${import.meta.env.VITE_API_URI}/api/logout`).then(() => {
       commit('SET_TOKEN', null)
       commit('SET_USER', null)
+
+      // Redirect to login after logout
+      router.push('/login')
     })
   },
 }

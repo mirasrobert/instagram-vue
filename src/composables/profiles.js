@@ -6,10 +6,9 @@ export default function useProfile() {
   const profile = ref(null)
   const isLoading = ref(true)
 
-  const getProfileById = async (param) => {
+  const getProfileByUsername = async (param) => {
     try {
       isLoading.value = true
-
       // Pass the authentication token
       const config = {
         headers: {
@@ -18,10 +17,12 @@ export default function useProfile() {
       }
 
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URI}/api/profiles/${param.id}`,
+        `${import.meta.env.VITE_API_URI}/api/profiles/${param.username}`,
         config
       )
       profile.value = response.data
+
+      isLoading.value = false
     } catch (error) {
       console.error('Getting profile error')
     } finally {
@@ -31,6 +32,7 @@ export default function useProfile() {
 
   return {
     profile,
-    getProfileById,
+    getProfileByUsername,
+    isLoading,
   }
 }
