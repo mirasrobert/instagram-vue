@@ -13,7 +13,7 @@
               height="140"
             />
           </div>
-          <form>
+          <form @submit.prevent="onSubmit">
             <div class="text-center py-3">
               <p href="#" class="text-sm text-gray-500 font-semibold text-lg">
                 Sign up to see photos and videos from your friends
@@ -26,6 +26,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Email"
                 required
+                v-model="form.email"
               />
             </div>
             <div class="mb-4">
@@ -35,6 +36,7 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Full Name"
                 required
+                v-model="form.name"
               />
             </div>
             <div class="mb-4">
@@ -44,15 +46,27 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Username"
                 required
+                v-model="form.username"
               />
             </div>
             <div class="mb-4">
               <input
-                type="text"
+                type="password"
                 id="password"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Password"
                 required
+                v-model="form.password"
+              />
+            </div>
+            <div class="mb-4">
+              <input
+                type="password"
+                id="confirm_password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                placeholder="Confirm Password"
+                required
+                v-model="form.password_confirmation"
               />
             </div>
             <button
@@ -91,8 +105,33 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
 export default {
   name: 'Login',
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+    const form = ref({
+      username: '',
+      email: '',
+      password: '',
+      name: '',
+      password_confirmation: '',
+    })
+    // Call vuex getters
+    const registerError = computed(() => store.getters.registerError)
+    // Call vuex action
+    const onSubmit = () =>
+      store.dispatch('register', { formData: form.value, router: router })
+    return {
+      onSubmit,
+      form,
+      registerError,
+    }
+  },
 }
 </script>
 

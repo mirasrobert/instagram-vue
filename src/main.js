@@ -1,7 +1,19 @@
 import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import './style.css' // Global CSS
+import App from './App.vue' // Root Component
 
-import router from './router'
+import store from './store' // VueX
+import router from './router' // Router
 
-createApp(App).use(router).mount('#app')
+// Subscriber runs for every vuex mutation
+// After commit this store.subscribe will run
+import subsriber from './store/subscriber'
+
+subsriber()
+
+store.dispatch('attempt', localStorage.getItem('token')).then(() => {
+  // After loading the ME api
+  // Then render the vue
+
+  createApp(App).use(store).use(router).mount('#app')
+})
