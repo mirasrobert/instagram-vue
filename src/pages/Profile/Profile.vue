@@ -2,8 +2,8 @@
   <Navbar />
   <Container>
     <div class="flex justify-center my-16">
-      <div class="grid grid-cols-[450px_minmax(650px,_1fr)_0px] gap-0">
-        <div class="w-full flex justify-center">
+      <div class="grid md:grid-cols-[450px_minmax(650px,_1fr)_0px] gap-0">
+        <div class="w-full flex justify-center mb-7 md:mb-0">
           <div class="profile-img-wrapper">
             <img
               class="rounded-full w-full h-full object-cover"
