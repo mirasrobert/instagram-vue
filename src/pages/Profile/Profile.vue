@@ -1,8 +1,8 @@
 <template>
   <Navbar />
   <Container>
-    <div class="flex justify-center mt-16">
-      <div class="grid grid-cols-[400px_minmax(700px,_1fr)_0px] gap-0">
+    <div class="flex justify-center my-16">
+      <div class="grid grid-cols-[450px_minmax(650px,_1fr)_0px] gap-0">
         <div class="w-full flex justify-center">
           <div class="profile-img-wrapper">
             <img
@@ -37,8 +37,9 @@
         </div>
       </div>
     </div>
+
+    <Posts />
   </Container>
-  <Posts />
 </template>
 
 <script>
