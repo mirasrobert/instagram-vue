@@ -22,7 +22,7 @@
           </form>
         </div>
         <div class="profile flex space-x-6 items-center">
-          <button>
+          <router-link to="/">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -37,8 +37,8 @@
                 d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
               />
             </svg>
-          </button>
-          <button>
+          </router-link>
+          <button @click="onLogout">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -54,25 +54,53 @@
               />
             </svg>
           </button>
-          <button>
+          <router-link :to="{ name: 'profile', params: { id: user.id } }">
             <img
-              src="https://randomuser.me/api/portraits/men/67.jpg"
+              :src="user && user.avatar"
               alt=""
               width="36"
               height="36"
               class="rounded-full"
             />
-          </button>
+          </router-link>
         </div>
       </div>
     </Container>
   </nav>
 </template>
 <script>
+import { ref, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+
 import Container from './Container.vue'
 
 export default {
   name: 'Navbar',
   components: { Container },
+  setup() {
+    const store = useStore()
+    const router = useRouter()
+
+    const isOpen = ref(false)
+
+    // Dispatch an action from vuex
+    const onLogout = () => {
+      store.dispatch('logout')
+      router.push('/login')
+    }
+    // Get a data from the state getters
+    const user = computed(() => store.getters.user)
+    // Navbar collapse
+    const toggle = () => {
+      isOpen.value = !isOpen.value
+    }
+    return {
+      onLogout,
+      user,
+      isOpen,
+      toggle,
+    }
+  },
 }
 </script>

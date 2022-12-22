@@ -20,6 +20,11 @@ const getters = {
     return state.user // Get User Information from the state
   },
 
+  // @return api token
+  token: (state) => {
+    return state.token // Get Token from the state
+  },
+
   loginError: (state) => {
     return state.loginError // Get Register Error from the state
   },
