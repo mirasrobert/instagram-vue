@@ -1,14 +1,11 @@
 <template>
   <div class="flex">
-    <img
-      class="h-10 w-10 rounded-full"
-      src="https://randomuser.me/api/portraits/men/42.jpg"
-    />
+    <img class="h-10 w-10 rounded-full" :src="user.avatar" />
     <div class="ml-3">
       <span class="text-sm font-semibold antialiased block leading-tight">
-        Caroline
+        {{ user && user.username }}
       </span>
-      <span class="text-gray-600 text-xs block"> Asheville, Carolina </span>
+      <span class="text-gray-600 text-xs block"> {{ user && user.name }} </span>
     </div>
   </div>
 </template>
@@ -16,6 +13,14 @@
 <script>
 export default {
   name: 'UserProfile',
+  props: ['user'],
+  setup() {
+    const backend_uri = `${import.meta.env.VITE_API_URI}`
+
+    return {
+      backend_uri,
+    }
+  },
 }
 </script>
 

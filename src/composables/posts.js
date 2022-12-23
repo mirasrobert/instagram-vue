@@ -5,8 +5,33 @@ import { ref } from 'vue'
 import Swal from 'sweetalert2'
 
 export default function usePost() {
-  const posts = ref(null)
+  const posts = ref([])
   const isLoading = ref(true)
+
+  const getPostsFromYourFollowings = async (token) => {
+    try {
+      isLoading.value = true
+      // Pass the authentication token
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URI}/api/posts`,
+        config
+      )
+
+      posts.value = response.data
+
+      isLoading.value = false
+    } catch (error) {
+      console.error('Error Getting posts from your friends')
+    } finally {
+      isLoading.value = false
+    }
+  }
 
   const getProfilePosts = async (param) => {
     try {
@@ -71,5 +96,6 @@ export default function usePost() {
     isLoading,
     getProfilePosts,
     addPost,
+    getPostsFromYourFollowings,
   }
 }

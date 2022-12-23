@@ -36,7 +36,6 @@ import useProfile from '../../composables/profiles'
 import Container from '../../components/Container.vue'
 import Navbar from '../../components/Navbar.vue'
 import Authenticated from '../../components/slot/Authenticated.vue'
-import FollowButton from '../../components/FollowButton.vue'
 import AdditionalProfile from '../../components/AdditionalProfile.vue'
 
 import Posts from './Posts.vue'
@@ -51,7 +50,6 @@ export default {
     Posts,
     Authenticated,
     ClipLoader,
-    FollowButton,
     AdditionalProfile,
   },
   setup() {
