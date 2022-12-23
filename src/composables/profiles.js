@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 export default function useProfile() {
-  const profile = ref(null)
+  const response = ref(null)
   const isLoading = ref(true)
 
   const getProfileByUsername = async (param) => {
@@ -16,11 +16,11 @@ export default function useProfile() {
         },
       }
 
-      const response = await axios.get(
+      const res = await axios.get(
         `${import.meta.env.VITE_API_URI}/api/profiles/${param.username}`,
         config
       )
-      profile.value = response.data
+      response.value = res.data
 
       isLoading.value = false
     } catch (error) {
@@ -31,7 +31,7 @@ export default function useProfile() {
   }
 
   return {
-    profile,
+    response,
     getProfileByUsername,
     isLoading,
   }

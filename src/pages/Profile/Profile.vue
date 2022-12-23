@@ -15,20 +15,20 @@
               <div class="profile-img-wrapper">
                 <img
                   class="rounded-full w-full h-full object-cover"
-                  :src="profile && profile.user.avatar"
+                  :src="response && response.profile.user.avatar"
                   alt="dp"
                 />
               </div>
             </div>
             <div class="w-full">
               <div class="flex space-x-3 mb-5">
-                <p class="text-4xl">{{ profile.user.username }}</p>
-                <button
-                  type="submit"
-                  class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-3 text-center"
-                >
-                  Follow
-                </button>
+                <p class="text-4xl">
+                  {{ response && response.profile.user.username }}
+                </p>
+                <follow-button
+                  :userId="response.profile.user.id"
+                  :follows="response.follows"
+                />
               </div>
               <div class="flex space-x-6 mb-5">
                 <p><span class="font-bold"> 1,048 </span> posts</p>
@@ -37,17 +37,19 @@
               </div>
               <div>
                 <p>
-                  <span class="font-bold">{{ profile.user.name }}.</span>
-                  {{ profile.description }}
+                  <span class="font-bold"
+                    >{{ response && response.profile.user.name }}.</span
+                  >
+                  {{ response && response.profile.description }}
                 </p>
                 <p class="text-sm font-semibold text-blue-700">
-                  {{ profile.website && profile.website }}
+                  {{ response && response.profile.website }}
                 </p>
               </div>
             </div>
           </div>
         </div>
-        <Posts :posts="profile.posts" />
+        <Posts :posts="response.profile.posts" />
       </div>
     </Container>
   </Authenticated>
@@ -62,6 +64,7 @@ import useProfile from '../../composables/profiles'
 import Container from '../../components/Container.vue'
 import Navbar from '../../components/Navbar.vue'
 import Authenticated from '../../components/slot/Authenticated.vue'
+import FollowButton from '../../components/FollowButton.vue'
 import Posts from './Posts.vue'
 
 // Loader
@@ -74,9 +77,10 @@ export default {
     Posts,
     Authenticated,
     ClipLoader,
+    FollowButton,
   },
   setup() {
-    const { profile, isLoading, getProfileByUsername } = useProfile()
+    const { response, isLoading, getProfileByUsername } = useProfile()
     const route = useRoute()
     const store = useStore()
 
@@ -101,7 +105,7 @@ export default {
     )
 
     return {
-      profile,
+      response,
       isLoading,
     }
   },
