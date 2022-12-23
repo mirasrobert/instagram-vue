@@ -44,7 +44,7 @@ const actions = {
       ) // Login that returns a token
       dispatch('attempt', response.data.token)
       commit('SET_LOGIN_ERROR', null) // Clear Errors
-      data.router.push('/') // Redirect When Success Login
+      data.router.replace('/') // Redirect When Success Login
     } catch (e) {
       commit('SET_LOGIN_ERROR', e.response.data) // Set Error
       if (e.response.status === 401) {
@@ -72,7 +72,7 @@ const actions = {
       ) // Register that returns a token
       dispatch('attempt', response.data.token)
       commit('SET_REGISTER_ERROR', null) // Clear Errors
-      data.router.push('/') // Redirect When Success Register
+      data.router.replace('/') // Redirect When Success Register
     } catch (e) {
       commit('SET_REGISTER_ERROR', e.response.data)
     }

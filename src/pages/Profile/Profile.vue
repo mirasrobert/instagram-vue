@@ -15,7 +15,7 @@
               <div class="profile-img-wrapper">
                 <img
                   class="rounded-full w-full h-full object-cover"
-                  :src="response && response.profile.user.avatar"
+                  :src="response.profile.user.avatar"
                   alt="dp"
                 />
               </div>
@@ -23,7 +23,7 @@
             <div class="w-full">
               <div class="flex space-x-3 mb-5">
                 <p class="text-4xl">
-                  {{ response && response.profile.user.username }}
+                  {{ response.profile.user.username }}
                 </p>
                 <follow-button
                   :userId="response.profile.user.id"
@@ -31,19 +31,34 @@
                 />
               </div>
               <div class="flex space-x-6 mb-5">
-                <p><span class="font-bold"> 1,048 </span> posts</p>
-                <p><span class="font-bold"> 1k </span> followers</p>
-                <p><span class="font-bold"> 22 </span> following</p>
+                <p>
+                  <span class="font-bold">
+                    {{ response.profile.posts.length }}
+                  </span>
+                  posts
+                </p>
+                <p>
+                  <span class="font-bold">
+                    {{ response.profile.followers_count }}
+                  </span>
+                  followers
+                </p>
+                <p>
+                  <span class="font-bold">
+                    {{ response.profile.user.following_count }}
+                  </span>
+                  following
+                </p>
               </div>
               <div>
                 <p>
                   <span class="font-bold"
-                    >{{ response && response.profile.user.name }}.</span
+                    >{{ response.profile.user.name }}.</span
                   >
-                  {{ response && response.profile.description }}
+                  {{ response.profile.description }}
                 </p>
                 <p class="text-sm font-semibold text-blue-700">
-                  {{ response && response.profile.website }}
+                  {{ response.profile.website }}
                 </p>
               </div>
             </div>
@@ -92,6 +107,7 @@ export default {
       () => route.params.id,
       (username) => {
         if (username) {
+          // Get Profile
           getProfileByUsername({
             token: token.value,
             username: username,

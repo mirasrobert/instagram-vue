@@ -10,23 +10,20 @@
 
 <script>
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import useFollow from '../composables/follow'
 export default {
   name: 'FollowButton',
   props: ['userId', 'follows'],
   setup(props) {
     const isFollows = ref(props.follows)
 
+    const { toggleFollowProfile } = useFollow()
+
     // Follow and Unfollow
     const followProfile = () => {
-      axios
-        .post(`${import.meta.env.VITE_API_URI}/api/follow/${props.userId}`)
-        .then((response) => {
-          // Change value of follows into opposite
-          isFollows.value = !isFollows.value
-          console.log(response.data)
-        })
-        .catch((err) => console.error('Following profile error'))
+      toggleFollowProfile(props.userId)
+      // Change value of follows into opposite
+      isFollows.value = !isFollows.value
     }
 
     // Change Button Text

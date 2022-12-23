@@ -11,8 +11,9 @@ export default {
     ...mapGetters['authenticated'],
   },
   created() {
-    if (this.$store.getters.authenticated) {
-      router.replace('/')
+    //this.$store.getters.authenticated &&
+    if (localStorage.getItem('token')) {
+      router.push('/')
     }
   },
 }
