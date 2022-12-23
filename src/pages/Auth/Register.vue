@@ -4,15 +4,13 @@
       <div class="login-wrapper">
         <div class="flex justify-center">
           <div
-            class="login-form-width p-6 bg-white border border-gray-200 rounded-md shadow-sm"
-          >
+            class="login-form-width p-6 bg-white border border-gray-200 rounded-md shadow-sm">
             <div class="flex justify-center py-3">
               <img
                 src="https://www.dafont.com/forum/attach/orig/7/3/737566.png?1"
                 alt=""
                 width="140"
-                height="140"
-              />
+                height="140" />
             </div>
             <form @submit.prevent="onSubmit">
               <div class="text-center py-3">
@@ -22,13 +20,24 @@
               </div>
               <div class="mb-4">
                 <input
-                  type="email"
+                  type="text"
                   id="email"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                   placeholder="Email"
-                  required
-                  v-model="form.email"
-                />
+                  v-model="form.email" />
+
+                <div
+                  v-if="
+                    registerError &&
+                    registerError.errors &&
+                    registerError.errors.email
+                  ">
+                  <span
+                    v-for="(message, keys) in registerError.errors.email"
+                    :key="keys">
+                    <validation-text :text="message" />
+                  </span>
+                </div>
               </div>
               <div class="mb-4">
                 <input
@@ -36,9 +45,20 @@
                   id="full_name"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                   placeholder="Full Name"
-                  required
-                  v-model="form.name"
-                />
+                  v-model="form.name" />
+
+                <div
+                  v-if="
+                    registerError &&
+                    registerError.errors &&
+                    registerError.errors.name
+                  ">
+                  <span
+                    v-for="(message, keys) in registerError.errors.name"
+                    :key="keys">
+                    <validation-text :text="message" />
+                  </span>
+                </div>
               </div>
               <div class="mb-4">
                 <input
@@ -46,9 +66,20 @@
                   id="username"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                   placeholder="Username"
-                  required
-                  v-model="form.username"
-                />
+                  v-model="form.username" />
+
+                <div
+                  v-if="
+                    registerError &&
+                    registerError.errors &&
+                    registerError.errors.username
+                  ">
+                  <span
+                    v-for="(message, keys) in registerError.errors.username"
+                    :key="keys">
+                    <validation-text :text="message" />
+                  </span>
+                </div>
               </div>
               <div class="mb-4">
                 <input
@@ -56,9 +87,20 @@
                   id="password"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                   placeholder="Password"
-                  required
-                  v-model="form.password"
-                />
+                  v-model="form.password" />
+
+                <div
+                  v-if="
+                    registerError &&
+                    registerError.errors &&
+                    registerError.errors.password
+                  ">
+                  <span
+                    v-for="(message, keys) in registerError.errors.password"
+                    :key="keys">
+                    <validation-text :text="message" />
+                  </span>
+                </div>
               </div>
               <div class="mb-4">
                 <input
@@ -66,14 +108,11 @@
                   id="confirm_password"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
                   placeholder="Confirm Password"
-                  required
-                  v-model="form.password_confirmation"
-                />
+                  v-model="form.password_confirmation" />
               </div>
               <button
                 type="submit"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm w-full px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Sign Up
               </button>
               <div class="text-center py-3">
@@ -91,13 +130,14 @@
 
         <div class="flex justify-center mt-3">
           <div
-            class="login-form-width p-6 bg-white border border-gray-200 rounded-md shadow-sm"
-          >
+            class="login-form-width p-6 bg-white border border-gray-200 rounded-md shadow-sm">
             <div class="text-center">
               <span>Have have an account?</span>
-              <a href="/login" class="text-sm text-blue-600 font-semibold">
+              <router-link
+                :to="{ name: 'login' }"
+                class="text-sm text-blue-600 font-semibold">
                 Login
-              </a>
+              </router-link>
             </div>
           </div>
         </div>
@@ -107,10 +147,11 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import Guest from '../../components/slot/Guest.vue'
+import ValidationText from '../../components/ValidationText.vue'
 
 export default {
   name: 'Login',
@@ -124,6 +165,13 @@ export default {
       name: '',
       password_confirmation: '',
     })
+
+    // On Component Mount
+    onMounted(() => {
+      // Clear Form Errors
+      store.dispatch('clearRegisterError')
+    })
+
     // Call vuex getters
     const registerError = computed(() => store.getters.registerError)
     // Call vuex action
@@ -135,7 +183,7 @@ export default {
       registerError,
     }
   },
-  components: { Guest },
+  components: { Guest, ValidationText },
 }
 </script>
 

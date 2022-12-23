@@ -113,6 +113,14 @@ const actions = {
       router.push('/login')
     })
   },
+
+  clearLoginError({ commit }) {
+    commit('SET_LOGIN_ERROR', null)
+  },
+
+  clearRegisterError({ commit }) {
+    commit('SET_REGISTER_ERROR', null)
+  },
 }
 
 const mutations = {
