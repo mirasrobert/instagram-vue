@@ -4,8 +4,7 @@
     <Container>
       <div
         v-if="isLoading"
-        class="flex items-center justify-center min-h-screen w-full"
-      >
+        class="flex items-center justify-center min-h-screen w-full">
         <clip-loader color="#1d4ed8" size="120px"></clip-loader>
       </div>
       <div v-else>
@@ -16,52 +15,10 @@
                 <img
                   class="rounded-full w-full h-full object-cover"
                   :src="response.profile.user.avatar"
-                  alt="dp"
-                />
+                  alt="dp" />
               </div>
             </div>
-            <div class="w-full">
-              <div class="flex space-x-3 mb-5">
-                <p class="text-4xl">
-                  {{ response.profile.user.username }}
-                </p>
-                <follow-button
-                  :userId="response.profile.user.id"
-                  :follows="response.follows"
-                />
-              </div>
-              <div class="flex space-x-6 mb-5">
-                <p>
-                  <span class="font-bold">
-                    {{ response.profile.posts.length }}
-                  </span>
-                  posts
-                </p>
-                <p>
-                  <span class="font-bold">
-                    {{ response.profile.followers_count }}
-                  </span>
-                  followers
-                </p>
-                <p>
-                  <span class="font-bold">
-                    {{ response.profile.user.following_count }}
-                  </span>
-                  following
-                </p>
-              </div>
-              <div>
-                <p>
-                  <span class="font-bold"
-                    >{{ response.profile.user.name }}.</span
-                  >
-                  {{ response.profile.description }}
-                </p>
-                <p class="text-sm font-semibold text-blue-700">
-                  {{ response.profile.website }}
-                </p>
-              </div>
-            </div>
+            <additional-profile :response="response" />
           </div>
         </div>
         <Posts :posts="response.profile.posts" />
@@ -80,6 +37,8 @@ import Container from '../../components/Container.vue'
 import Navbar from '../../components/Navbar.vue'
 import Authenticated from '../../components/slot/Authenticated.vue'
 import FollowButton from '../../components/FollowButton.vue'
+import AdditionalProfile from '../../components/AdditionalProfile.vue'
+
 import Posts from './Posts.vue'
 
 // Loader
@@ -93,6 +52,7 @@ export default {
     Authenticated,
     ClipLoader,
     FollowButton,
+    AdditionalProfile,
   },
   setup() {
     const { response, isLoading, getProfileByUsername } = useProfile()
