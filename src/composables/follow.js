@@ -3,15 +3,15 @@ import axios from 'axios'
 import { ref } from 'vue'
 
 export default function useFollow() {
-  const users = ref([])
+  const response = ref([])
   const isFollowingLoading = ref(true)
 
   const toggleFollowProfile = async (user_id) => {
     try {
-      const response = await axios.post(
+      const res = await axios.post(
         `${import.meta.env.VITE_API_URI}/api/follow/${user_id}`
       )
-      console.log(response.data)
+      console.log(res.data)
     } catch (error) {
       console.error('Following profile error')
     }
@@ -27,12 +27,12 @@ export default function useFollow() {
         },
       }
 
-      const response = await axios.get(
+      const res = await axios.get(
         `${import.meta.env.VITE_API_URI}/api/following`,
         config
       )
 
-      users.value = response.data
+      response.value = res.data
 
       isFollowingLoading.value = false
     } catch (error) {
@@ -44,7 +44,7 @@ export default function useFollow() {
 
   return {
     toggleFollowProfile,
-    users,
+    response,
     isFollowingLoading,
     getFollowings,
   }

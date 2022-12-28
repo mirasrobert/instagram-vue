@@ -18,7 +18,9 @@
           </div>
 
           <div class="hidden md:block">
-            <suggestions :users="users" />
+            <suggestions
+              :following="response.following"
+              :suggestions="response.suggestions" />
           </div>
         </div>
       </Container>
@@ -55,7 +57,7 @@ export default {
     // Get the token from state
     const token = computed(() => store.getters.token)
 
-    const { users, getFollowings } = useFollow()
+    const { response, getFollowings } = useFollow()
     const { posts, isLoading, getPostsFromYourFollowings } = usePost()
 
     onMounted(() => {
@@ -64,7 +66,7 @@ export default {
     })
 
     return {
-      users,
+      response,
       posts,
       isLoading,
     }

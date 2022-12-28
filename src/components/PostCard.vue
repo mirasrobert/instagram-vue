@@ -1,7 +1,9 @@
 <template>
   <div class="border rounded-sm w-full md:max-w-xl mb-10">
     <!-- Profile -->
-    <user-profile :user="post.profile.user" class="items-center px-4 py-3" />
+    <div class="items-center px-4 py-3">
+      <user-profile :user="post.profile.user" />
+    </div>
 
     <!-- Image -->
     <div class="w-full h-500px">
