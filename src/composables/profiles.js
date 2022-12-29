@@ -5,7 +5,6 @@ import {ref} from 'vue'
 import Swal from 'sweetalert2'
 
 import {useRouter} from 'vue-router'
-import profile from "../pages/Profile/Profile.vue";
 
 export default function useProfile() {
     const response = ref(null)
@@ -13,6 +12,8 @@ export default function useProfile() {
     const isSaving = ref(false)
     const passwordErrors = ref(null)
     const router = useRouter()
+
+    const filteredProfiles = ref([])
 
 
     const getProfileByUsername = async (param) => {
@@ -152,6 +153,16 @@ export default function useProfile() {
         }
     }
 
+    const searchProfile = async (search) => {
+        try {
+            const res = await axios.get(`${import.meta.env.VITE_API_URI}/api/profiles/search/${search}`)
+            filteredProfiles.value = res.data
+        } catch (e) {
+            console.error(e.data)
+            filteredProfiles.value = []
+        }
+    }
+
     return {
         response,
         getProfileByUsername,
@@ -159,6 +170,8 @@ export default function useProfile() {
         changePassword,
         isLoading,
         isSaving,
-        passwordErrors
+        passwordErrors,
+        searchProfile,
+        filteredProfiles
     }
 }
