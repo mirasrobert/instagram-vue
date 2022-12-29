@@ -24,7 +24,7 @@
                     accept="image/*"
                     type="file"
                     id="Image"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                    class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                     placeholder="Image"/>
               </div>
               <div>
@@ -48,7 +48,7 @@
             <input
                 type="name"
                 id="name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Full Name"
                 v-model="response.profile.user.name"/>
           </div>
@@ -61,7 +61,7 @@
             <input
                 type="username"
                 id="username"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Username"
                 v-model="response.profile.user.username"/>
           </div>
@@ -74,7 +74,7 @@
             <input
                 type="email"
                 id="email"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Email"
                 v-model="response.profile.user.email"/>
           </div>
@@ -87,7 +87,7 @@
             <input
                 type="website"
                 id="website"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Your website"
                 v-model="response.profile.website"/>
           </div>
@@ -99,7 +99,7 @@
             >
             <textarea
                 placeholder="Your profile description or caption"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 rows="4"
                 v-model="response.profile.description"></textarea>
           </div>
@@ -118,7 +118,7 @@
                 class="block mb-2 text-sm font-medium text-gray-900">Current Password</label>
             <input
                 type="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Your Current Password"
                 v-model="form.current_password"/>
             <div
@@ -145,7 +145,7 @@
                 class="block mb-2 text-sm font-medium text-gray-900">New Password</label>
             <input
                 type="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="******"
                 v-model="form.password"/>
 
@@ -166,7 +166,7 @@
                 class="block mb-2 text-sm font-medium text-gray-900">Confirm Password</label>
             <input
                 type="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
                 placeholder="Confirm Password"
                 v-model="form.password_confirmation"/>
           </div>
