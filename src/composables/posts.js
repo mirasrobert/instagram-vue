@@ -1,101 +1,129 @@
 import axios from 'axios'
 
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 import Swal from 'sweetalert2'
 
 export default function usePost() {
-  const posts = ref([])
-  const isLoading = ref(true)
+    const posts = ref([])
+    const isLoading = ref(true)
 
-  const getPostsFromYourFollowings = async (token) => {
-    try {
-      isLoading.value = true
-      // Pass the authentication token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+    const isProcessing = ref(false)
 
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URI}/api/posts`,
-        config
-      )
+    const getPostsFromYourFollowings = async (token) => {
+        try {
+            isLoading.value = true
+            // Pass the authentication token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
 
-      posts.value = response.data
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URI}/api/posts`,
+                config
+            )
 
-      isLoading.value = false
-    } catch (error) {
-      console.error('Error Getting posts from your friends')
-    } finally {
-      isLoading.value = false
+            posts.value = response.data
+
+            isLoading.value = false
+        } catch (error) {
+            console.error('Error Getting posts from your friends')
+        } finally {
+            isLoading.value = false
+        }
     }
-  }
 
-  const getProfilePosts = async (param) => {
-    try {
-      isLoading.value = true
-      // Pass the authentication token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${param.token}`,
-        },
-      }
+    const getProfilePosts = async (param) => {
+        try {
+            isLoading.value = true
+            // Pass the authentication token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${param.token}`,
+                },
+            }
 
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URI}/api/profiles/${param.id}`,
-        config
-      )
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URI}/api/profiles/${param.id}`,
+                config
+            )
 
-      posts.value = response.data
+            posts.value = response.data
 
-      isLoading.value = false
-    } catch (error) {
-      console.error('Getting profile error')
-    } finally {
-      isLoading.value = false
+            isLoading.value = false
+        } catch (error) {
+            console.error('Getting profile error')
+        } finally {
+            isLoading.value = false
+        }
     }
-  }
 
-  const addPost = async (param) => {
-    try {
-      // Pass the authentication token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${param.token}`,
-        },
-      }
+    const addPost = async (param) => {
+        try {
+            // Pass the authentication token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${param.token}`,
+                },
+            }
 
-      // Add Post
-      await axios.post(
-        `${import.meta.env.VITE_API_URI}/api/posts`,
-        param.data,
-        config
-      )
+            // Add Post
+            await axios.post(
+                `${import.meta.env.VITE_API_URI}/api/posts`,
+                param.data,
+                config
+            )
 
-      // Go back to profile
-      param.router.push(`/profiles/${param.username}`)
+            // Go back to profile
+            param.router.push(`/profiles/${param.username}`)
 
-      Swal.fire({
-        toast: true,
-        icon: 'success',
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        title: 'Post has been added.',
-      })
-    } catch (error) {
-      console.error('Error adding post')
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: 'Post has been added.',
+            })
+        } catch (error) {
+            console.error('Error adding post')
+        }
     }
-  }
 
-  return {
-    posts,
-    isLoading,
-    getProfilePosts,
-    addPost,
-    getPostsFromYourFollowings,
-  }
+    const likePost = async (token, postId) => {
+        try {
+            isProcessing.value = true
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+
+            const res = await axios.post(
+                `${import.meta.env.VITE_API_URI}/api/posts/like_post/${postId}`,
+                config
+            )
+
+            console.log(res.data)
+            return res.data;
+
+        } catch (e) {
+            console.error(e)
+        } finally {
+            isProcessing.value = false
+        }
+    }
+
+    return {
+        posts,
+        isLoading,
+        getProfilePosts,
+        addPost,
+        getPostsFromYourFollowings,
+        likePost,
+        isProcessing
+    }
 }
