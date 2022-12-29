@@ -1,7 +1,7 @@
 <template>
   <Authenticated>
     <Navbar />
-
+    <Modal />
     <section class="my-10">
       <Container>
         <div
@@ -38,6 +38,7 @@ import Navbar from '../components/Navbar.vue'
 import PostCard from '../components/PostCard.vue'
 import Suggestions from '../components/Suggestions.vue'
 import Authenticated from '../components/slot/Authenticated.vue'
+import Modal from "../components/Modal.vue";
 
 import ClipLoader from 'vue-spinner/src/ClipLoader.vue'
 
@@ -50,6 +51,7 @@ export default {
     Suggestions,
     Authenticated,
     ClipLoader,
+    Modal
   },
   setup() {
     const store = useStore()
