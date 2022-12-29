@@ -10,10 +10,10 @@ import profile from "../pages/Profile/Profile.vue";
 export default function useProfile() {
     const response = ref(null)
     const isLoading = ref(true)
-
     const isSaving = ref(false)
-
+    const passwordErrors = ref(null)
     const router = useRouter()
+
 
     const getProfileByUsername = async (param) => {
         try {
@@ -51,14 +51,6 @@ export default function useProfile() {
             }
 
             // Response is from ref so no need to pass form data on param
-            const fields = {
-                name: response.value.profile.user.name,
-                email: response.value.profile.user.email,
-                username: response.value.profile.user.username,
-                description: response.value.profile.description,
-                website: response.value.profile.website,
-            }
-
             // Create FormData Object
             const formData = new FormData()
             formData.append('_method', 'PUT') // For Laravel FormData To Work for PUT|PATCH
@@ -108,11 +100,65 @@ export default function useProfile() {
         }
     }
 
+    const changePassword = async (token, formData) => {
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+
+            const res = await axios.post(`${import.meta.env.VITE_API_URI}/api/change_password`, formData, config)
+
+            passwordErrors.value = null
+
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: res.data.message,
+            })
+
+            // Clear Form
+            formData.current_password = '';
+            formData.password = '';
+            formData.password_confirmation = '';
+
+        } catch (e) {
+            passwordErrors.value = null
+            if(e.response.status == 401) {
+                // Incorrect old password
+                passwordErrors.value = e.response.data
+            } else if(e.response.status == 422) {
+                // validation error
+                passwordErrors.value = e.response.data
+            } else {
+                // 500 error
+                Swal.fire({
+                    toast: true,
+                    icon: 'error',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    title: 'Error updating password. Please try again.',
+                })
+                console.error(e)
+                passwordErrors.value = null
+            }
+        }
+    }
+
     return {
         response,
         getProfileByUsername,
         updateProfile,
+        changePassword,
         isLoading,
         isSaving,
+        passwordErrors
     }
 }
