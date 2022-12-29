@@ -14,7 +14,11 @@
               <div class="profile-img-wrapper">
                 <img
                   class="rounded-full w-full h-full object-cover"
-                  :src="response.profile.user.avatar"
+                  :src="
+                    response.profile.user.avatar.includes('storage')
+                      ? backend_uri + response.profile.user.avatar
+                      : response.profile.user.avatar
+                  "
                   alt="dp" />
               </div>
             </div>
@@ -52,7 +56,7 @@ export default {
     ClipLoader,
     AdditionalProfile,
   },
-  setup() {
+  setup(props) {
     const { response, isLoading, getProfileByUsername } = useProfile()
     const route = useRoute()
     const store = useStore()
@@ -78,9 +82,12 @@ export default {
       }
     )
 
+    const backend_uri = `${import.meta.env.VITE_API_URI}`
+
     return {
       response,
       isLoading,
+      backend_uri,
     }
   },
 }

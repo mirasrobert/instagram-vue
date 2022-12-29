@@ -54,7 +54,11 @@
             v-if="user"
             :to="{ name: 'profile', params: { id: user.username } }">
             <img
-              :src="user && user.avatar"
+              :src="
+                user.avatar.includes('storage')
+                  ? backend_uri + user.avatar
+                  : user.avatar
+              "
               alt=""
               width="36"
               height="36"
@@ -91,11 +95,15 @@ export default {
     const toggle = () => {
       isOpen.value = !isOpen.value
     }
+
+    const backend_uri = `${import.meta.env.VITE_API_URI}`
+
     return {
       onLogout,
       user,
       isOpen,
       toggle,
+      backend_uri,
     }
   },
 }

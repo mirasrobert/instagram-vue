@@ -8,7 +8,11 @@
     <!-- Image -->
     <div class="w-full h-500px">
       <img
-        :src="backend_uri + post.image.url"
+        :src="
+          post.image.url.includes('storage')
+            ? backend_uri + post.image.url
+            : post.image.url
+        "
         class="w-full h-full object-cover" />
     </div>
 

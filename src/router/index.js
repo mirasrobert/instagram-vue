@@ -4,6 +4,9 @@ import Login from '../pages/Auth/Login.vue'
 import Register from '../pages/Auth/Register.vue'
 import Profile from '../pages/Profile/Profile.vue'
 import AddPost from '../pages/Post/AddPost.vue'
+import EditProfile from '../pages/Profile/EditProfile.vue'
+
+// We use username as a url parameter
 
 const routes = [
   {
@@ -30,6 +33,11 @@ const routes = [
     path: '/posts/create',
     name: 'posts.create',
     component: AddPost,
+  },
+  {
+    path: '/profiles/:id/edit',
+    name: 'profiles.edit',
+    component: EditProfile,
   },
 ]
 

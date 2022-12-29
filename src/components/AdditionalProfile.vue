@@ -12,7 +12,13 @@
       <button
         v-else
         class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm px-3 text-center items-center">
-        <router-link to="/profiles/username/edit">Edit Profile</router-link>
+        <router-link
+          :to="{
+            name: 'profiles.edit',
+            params: { id: response.profile.user.username },
+          }"
+          >Edit Profile</router-link
+        >
       </button>
     </div>
     <div class="flex space-x-6 mb-5">
