@@ -1,18 +1,20 @@
 <template>
-    <div>
-      <teleport to="body">
-        <div v-if="isOpen" class="modal">
-          <div class="p-16 rounded-md bg-white">
-            <slot></slot>
-            <button class="px-3 py-2 bg-blue-600 text-white" @click="$emit('close')">Close</button>
-          </div>
+  <div>
+    <teleport to="body">
+      <div v-if="open" class="modal">
+        <div class="px-10 py-8 w-4/5 md:w-3/5	lg:w-2/5 rounded-md bg-white">
+          <slot></slot>
         </div>
-      </teleport>
-    </div>
+      </div>
+    </teleport>
+  </div>
 </template>
 
-<script setup>
-import {ref, defineEmits, defineProps} from "vue";
-defineProps('isOpen')
-defineEmits('close')
+<script>
+import {ref} from "vue";
+
+export default {
+  name: "Modal",
+  props: ['open'],
+}
 </script>

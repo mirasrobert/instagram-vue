@@ -50,11 +50,11 @@
                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
             </svg>
           </button>
-          <router-link :to="{ name: 'posts.create' }">
+          <button @click="toggleModal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-          </router-link>
+          </button>
           <router-link
             v-if="user"
             :to="{ name: 'profile', params: { id: user.username } }">
@@ -73,6 +73,18 @@
       </div>
     </Container>
   </nav>
+
+  <modal :open="isOpen">
+    <div class="flex justify-end">
+      <button class="px-3 py-2 text-gray-800" @click="toggleModal"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      </button>
+    </div>
+    <!-- FORM -->
+    <add-post />
+  </modal>
+
 </template>
 <script>
 import { ref, computed } from 'vue'
@@ -80,15 +92,15 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 import Container from './Container.vue'
+import Modal from "./Modal.vue";
+import AddPost from "../pages/Post/AddPost.vue";
 
 export default {
   name: 'Navbar',
-  components: { Container },
+  components: { Container, Modal, AddPost },
   setup() {
     const store = useStore()
     const router = useRouter()
-
-    const isOpen = ref(false)
 
     // Dispatch an action from vuex
     const onLogout = () => {
@@ -96,18 +108,20 @@ export default {
     }
     // Get a data from the state getters
     const user = computed(() => store.getters.user)
-    // Navbar collapse
-    const toggle = () => {
-      isOpen.value = !isOpen.value
-    }
 
     const backend_uri = `${import.meta.env.VITE_API_URI}`
+
+    // For Modal
+    const isOpen = ref(false)
+    const toggleModal = () => {
+      isOpen.value = !isOpen.value
+    }
 
     return {
       onLogout,
       user,
       isOpen,
-      toggle,
+      toggleModal,
       backend_uri,
     }
   },
