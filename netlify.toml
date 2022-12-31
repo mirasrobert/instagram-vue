@@ -1,3 +1,8 @@
+[build]
+    command = "vite build"
+    functions = "netlify/functions"
+    publish = "dist"
+
 # FOR SPA APPS
 [[redirects]]
     from = "/*"
