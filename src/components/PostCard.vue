@@ -44,7 +44,26 @@
           </svg>
         </div>
       </div>
-      <div class="font-semibold text-sm mx-4 mt-2 mb-4">{{ count_likes }} likes</div>
+      <div class="font-semibold text-sm mx-4 mt-2">{{ count_likes }} likes</div>
+      <div class="mx-4 mt-2 mb-2">
+        <span class="font-semibold text-sm">{{ post.profile.user.username }}</span>
+        {{ post.caption }}
+      </div>
+      <div class="text-xs font-sm uppercase mx-4 mb-4">
+        12 hours ago
+      </div>
+      <div class="w-full border-t border-x-0 border-b-0"></div>
+      <form class="block">
+        <div class="flex">
+          <input type="text" name="comment" id="comment"
+                 class="bg-transparent outline-0 focus:ring-0 border-0 text-gray-900 text-sm block w-full p-2.5"
+                 placeholder="Add a comment..." required>
+          <button type="submit"
+                  class="focus:outline-none h-full text-sky-500 bg-transparent font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
+            Post
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
