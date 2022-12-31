@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import 'flowbite';
 import './style.css' // Global CSS
 import App from './App.vue' // Root Component
 

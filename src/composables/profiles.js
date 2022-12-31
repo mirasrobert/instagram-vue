@@ -35,6 +35,9 @@ export default function useProfile() {
 
             isLoading.value = false
         } catch (error) {
+            if (error.response.status === 404) {
+                await router.push({name: 'notfound'})
+            }
             console.error('Getting profile error')
         } finally {
             isLoading.value = false
@@ -130,10 +133,10 @@ export default function useProfile() {
 
         } catch (e) {
             passwordErrors.value = null
-            if(e.response.status == 401) {
+            if (e.response.status == 401) {
                 // Incorrect old password
                 passwordErrors.value = e.response.data
-            } else if(e.response.status == 422) {
+            } else if (e.response.status == 422) {
                 // validation error
                 passwordErrors.value = e.response.data
             } else {

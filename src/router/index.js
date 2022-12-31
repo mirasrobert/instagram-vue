@@ -5,6 +5,7 @@ import Register from '../pages/Auth/Register.vue'
 import Profile from '../pages/Profile/Profile.vue'
 import AddPost from '../pages/Post/AddPost.vue'
 import EditProfile from '../pages/Profile/EditProfile.vue'
+import NotFound from '../pages/NotFound.vue'
 
 // We use username as a url parameter
 
@@ -38,6 +39,11 @@ const routes = [
     path: '/profiles/:id/edit',
     name: 'profiles.edit',
     component: EditProfile,
+  },
+  {
+    path: '/:patchMatch(.*)*',
+    name: 'notfound',
+    component: NotFound,
   },
 ]
 

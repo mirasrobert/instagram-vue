@@ -11,25 +11,20 @@
       </div>
     </div>
     <div class="mb-4">
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Image caption</label>
       <input
           type="caption"
           id="caption"
-          class="bg-gray-50 text-gray-900 border text-sm rounded-sm block w-full px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block w-full"
+          class="bg-gray-50 rounded-md text-gray-900 border text-sm rounded-sm block w-full px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block w-full"
           placeholder="Caption"
           required
           v-model="form.caption"
       />
     </div>
     <div class="mb-6">
-      <input
-          @change="handleOnChangeImage"
-          accept="image/*"
-          type="file"
-          id="Image"
-          class="bg-gray-50 text-gray-900 border text-sm rounded-sm block w-full px-3 py-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block w-full"
-          placeholder="Image"
-          required
-      />
+      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Upload an image</label>
+      <input @change="handleOnChangeImage"
+             accept="image/*" class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="default_size" type="file">
     </div>
     <button
         type="submit"
@@ -38,6 +33,7 @@
       Submit
     </button>
   </form>
+
 </template>
 
 <script>
