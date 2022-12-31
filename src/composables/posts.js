@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
 
 import Swal from 'sweetalert2'
 
@@ -11,7 +11,6 @@ export default function usePost() {
     const post = ref(null)
     const isLoading = ref(true)
     const isProcessing = ref(false)
-
     const router = useRouter()
 
     const getPostsFromYourFollowings = async (token) => {

@@ -14,9 +14,11 @@
 </template>
 
 <script>
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import useComment from "../../composables/comments.js";
+import {useRoute} from 'vue-router';
+
 
 export default {
   name: "CommentForm",
@@ -26,20 +28,33 @@ export default {
     const content = ref('')
     const {isProcessing, addComment} = useComment()
 
+    const currentRoute = computed(() => {
+      return useRoute().name
+    })
+
     const token = computed(() => store.getters.token)
 
+    onMounted(() => {
+      console.log(currentRoute.value)
+    })
+
     const onSubmitHandler = async () => {
+      console.log(currentRoute.value === 'posts.show')
       if (content.value !== '') {
         await addComment(token.value, props.postId, {
           content: content.value
-        })
+        }, currentRoute)
+        // Empty Form
+        content.value = ''
       }
     }
+
 
     return {
       content,
       isProcessing,
-      onSubmitHandler
+      onSubmitHandler,
+      currentRoute
     }
   }
 }
