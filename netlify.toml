@@ -1,10 +1,10 @@
 [build]
-    command = "vite build"
-    functions = "netlify/functions"
-    publish = "dist"
+  command = "vite build"
+  functions = "netlify/functions"
+  publish = "dist"
 
 # FOR SPA APPS
 [[redirects]]
-    from = "/*"
-    to = "/index.html"
-    status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
