@@ -24,16 +24,12 @@
                     accept="image/*"
                     type="file"
                     id="Image"
-                    class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-sm block w-full p-2.5"
+                    class="bg-gray-50 border focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 block text-gray-900 text-sm rounded-md block w-full"
                     placeholder="Image"/>
               </div>
               <div>
                 <img
-                    :src="
-                    response.profile.user.avatar.includes('storage')
-                      ? backend_uri + response.profile.user.avatar
-                      : response.profile.user.avatar
-                  "
+                    :src="response.profile.user.avatar"
                     class="h-32 w-32 rounded-full"
                     alt=""/>
               </div>
@@ -256,15 +252,12 @@ export default {
       await changePassword(token.value, form.value)
     }
 
-    const backend_uri = `${import.meta.env.VITE_API_URI}`
-
     return {
       form,
       handleOnChangeImage,
       response,
       isLoading,
       isSaving,
-      backend_uri,
       saveProfile,
       onSubmitChangePassword,
       passwordErrors

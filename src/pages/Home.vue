@@ -1,7 +1,6 @@
 <template>
   <Authenticated>
     <Navbar />
-    <Modal />
     <section class="my-10">
       <Container>
         <div

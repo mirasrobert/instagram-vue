@@ -1,10 +1,10 @@
 <template>
   <Authenticated>
-    <Navbar />
+    <Navbar/>
     <Container>
       <div
-        v-if="isLoading"
-        class="flex items-center justify-center min-h-screen w-full">
+          v-if="isLoading"
+          class="flex items-center justify-center min-h-screen w-full">
         <clip-loader color="#1d4ed8" size="120px"></clip-loader>
       </div>
       <div v-else>
@@ -13,28 +13,24 @@
             <div class="w-full flex justify-center mb-7 md:mb-0">
               <div class="profile-img-wrapper">
                 <img
-                  class="rounded-full w-full h-full object-cover"
-                  :src="
-                    response.profile.user.avatar.includes('storage')
-                      ? backend_uri + response.profile.user.avatar
-                      : response.profile.user.avatar
-                  "
-                  alt="dp" />
+                    class="rounded-full w-full h-full object-cover"
+                    :src="response.profile.user.avatar"
+                    alt="dp"/>
               </div>
             </div>
-            <additional-profile :response="response" />
+            <additional-profile :response="response"/>
           </div>
         </div>
-        <Posts :posts="response.profile.posts" />
+        <Posts :posts="response.profile.posts"/>
       </div>
     </Container>
   </Authenticated>
 </template>
 
 <script>
-import { watch, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import {watch, computed} from 'vue'
+import {useRoute} from 'vue-router'
+import {useStore} from 'vuex'
 import useProfile from '../../composables/profiles'
 
 import Container from '../../components/Container.vue'
@@ -57,7 +53,7 @@ export default {
     AdditionalProfile,
   },
   setup(props) {
-    const { response, isLoading, getProfileByUsername } = useProfile()
+    const {response, isLoading, getProfileByUsername} = useProfile()
     const route = useRoute()
     const store = useStore()
 
@@ -66,28 +62,25 @@ export default {
 
     // fetch the user information when url parameter change
     watch(
-      () => route.params.id,
-      (username) => {
-        if (username) {
-          // Get Profile
-          getProfileByUsername({
-            token: token.value,
-            username: username,
-          })
+        () => route.params.id,
+        (username) => {
+          if (username) {
+            // Get Profile
+            getProfileByUsername({
+              token: token.value,
+              username: username,
+            })
+          }
+        },
+        {
+          deep: true,
+          immediate: true,
         }
-      },
-      {
-        deep: true,
-        immediate: true,
-      }
     )
-
-    const backend_uri = `${import.meta.env.VITE_API_URI}`
 
     return {
       response,
       isLoading,
-      backend_uri,
     }
   },
 }

@@ -29,7 +29,6 @@
                   <user-profile :user="profile.user"/>
                 </div>
               </div>
-              <hr>
             </div>
           </form>
         </div>
@@ -72,15 +71,8 @@
               v-if="user"
               :to="{ name: 'profile', params: { id: user.username } }" title="Profile">
             <img
-                :src="
-                user.avatar.includes('storage')
-                  ? backend_uri + user.avatar
-                  : user.avatar
-              "
-                alt=""
-                width="36"
-                height="36"
-                class="rounded-full"/>
+                :src="user.avatar"
+                class="h-10 w-10 rounded-full" alt="dp1"/>
           </router-link>
         </div>
       </div>
@@ -102,7 +94,7 @@
   </modal>
 
 </template>
-<script>var search;
+<script>
 
 import {ref, computed} from 'vue'
 import {useStore} from 'vuex'
@@ -131,8 +123,6 @@ export default {
     }
     // Get a data from the state getters
     const user = computed(() => store.getters.user)
-
-    const backend_uri = `${import.meta.env.VITE_API_URI}`
 
     // For Modal
     const isOpen = ref(false)
@@ -165,7 +155,6 @@ export default {
       user,
       isOpen,
       toggleModal,
-      backend_uri,
       search,
       debounce: createDebounce(),
       onSearchProfile,

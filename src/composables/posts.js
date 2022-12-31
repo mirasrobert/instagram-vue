@@ -4,11 +4,15 @@ import {ref} from 'vue'
 
 import Swal from 'sweetalert2'
 
+import {useRouter} from "vue-router";
+
 export default function usePost() {
     const posts = ref([])
+    const post = ref(null)
     const isLoading = ref(true)
-
     const isProcessing = ref(false)
+
+    const router = useRouter()
 
     const getPostsFromYourFollowings = async (token) => {
         try {
@@ -35,31 +39,6 @@ export default function usePost() {
         }
     }
 
-    const getProfilePosts = async (param) => {
-        try {
-            isLoading.value = true
-            // Pass the authentication token
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${param.token}`,
-                },
-            }
-
-            const response = await axios.get(
-                `${import.meta.env.VITE_API_URI}/api/profiles/${param.id}`,
-                config
-            )
-
-            posts.value = response.data
-
-            isLoading.value = false
-        } catch (error) {
-            console.error('Getting profile error')
-        } finally {
-            isLoading.value = false
-        }
-    }
-
     const addPost = async (param) => {
         try {
             // Pass the authentication token
@@ -77,7 +56,7 @@ export default function usePost() {
             )
 
             // Go back to profile
-            param.router.push(`/profiles/${param.username}`)
+            await param.router.push(`/profiles/${param.username}`)
 
             Swal.fire({
                 toast: true,
@@ -117,13 +96,42 @@ export default function usePost() {
         }
     }
 
+    const getSinglePost = async (token, postId) => {
+        try {
+            isLoading.value = true
+            // Pass the authentication token
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URI}/api/posts/${postId}`,
+                config
+            )
+
+            post.value = response.data
+
+            isLoading.value = false
+        } catch (error) {
+            if (error.response.status === 404) {
+                await router.push({name: 'notfound'})
+            }
+            console.error('Error Getting post')
+        } finally {
+            isLoading.value = false
+        }
+    }
+
     return {
         posts,
+        post,
         isLoading,
-        getProfilePosts,
         addPost,
         getPostsFromYourFollowings,
         likePost,
-        isProcessing
+        isProcessing,
+        getSinglePost
     }
 }

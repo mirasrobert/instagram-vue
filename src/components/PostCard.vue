@@ -1,121 +1,87 @@
 <template>
   <div class="border rounded-sm w-full md:max-w-xl mb-10 bg-white">
     <!-- Profile -->
-    <div class="flex items-center px-4 py-3">
+    <div class="flex justify-between items-center px-4 py-3">
       <user-profile :user="post.profile.user"/>
+      <div>
+        <button class="relative" @click="toggleDropdown">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/>
+          </svg>
+        </button>
+        <div id="dropdownDivider"
+             v-show="IsDropdownActive"
+             class="absolute w-44 bg-white rounded shadow">
+          <ul class="py-1 text-sm text-gray-700 ">
+            <li>
+              <router-link :to="{ name: 'posts.show', params: {id: post.id} }"
+                           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                Go to post
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Image -->
     <div class="w-full h-500px">
       <img
-          :src="
-          post.image.url.includes('storage')
-            ? backend_uri + post.image.url
-            : post.image.url
-        "
+          :src="post.image.url"
           class="w-full h-full object-cover"/>
     </div>
 
     <!-- React and Comments -->
     <div class="border">
-      <div class="flex items-center justify-between px-4 pt-3 pb-2">
-        <div class="flex gap-5">
-          <button class="disabled:opacity-50" :disabled="isProcessing" @click="onLikePostHandler(token, post)">
-            <svg :fill="'#'+likeColor" height="24" viewBox="0 0 48 48" width="24" class="text-red-700">
-              <path
-                  d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
-            </svg>
-          </button>
-          <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
-            <path
-                clip-rule="evenodd"
-                d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z"
-                fill-rule="evenodd"></path>
-          </svg>
-          <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
-            <path
-                d="M47.8 3.8c-.3-.5-.8-.8-1.3-.8h-45C.9 3.1.3 3.5.1 4S0 5.2.4 5.7l15.9 15.6 5.5 22.6c.1.6.6 1 1.2 1.1h.2c.5 0 1-.3 1.3-.7l23.2-39c.4-.4.4-1 .1-1.5zM5.2 6.1h35.5L18 18.7 5.2 6.1zm18.7 33.6l-4.4-18.4L42.4 8.6 23.9 39.7z"></path>
-          </svg>
-        </div>
-        <div class="flex">
-          <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24">
-            <path
-                d="M43.5 48c-.4 0-.8-.2-1.1-.4L24 29 5.6 47.6c-.4.4-1.1.6-1.6.3-.6-.2-1-.8-1-1.4v-45C3 .7 3.7 0 4.5 0h39c.8 0 1.5.7 1.5 1.5v45c0 .6-.4 1.2-.9 1.4-.2.1-.4.1-.6.1zM24 26c.8 0 1.6.3 2.2.9l15.8 16V3H6v39.9l15.8-16c.6-.6 1.4-.9 2.2-.9z"></path>
-          </svg>
-        </div>
-      </div>
-      <div class="font-semibold text-sm mx-4 mt-2">{{ count_likes }} likes</div>
+
+      <like-button :post="post"/>
+
       <div class="mx-4 mt-2 mb-2">
         <span class="font-semibold text-sm">{{ post.profile.user.username }}</span>
         {{ post.caption }}
       </div>
-      <div class="text-xs font-sm uppercase mx-4 mb-4">
-        12 hours ago
+
+      <div class="font-base text-sm mx-4 mb-2" v-if="post.comments_count > 0">
+        <router-link :to="{ name: 'posts.show', params: {id: post.id} }">
+          View comments
+        </router-link>
+      </div>
+      <div class=" text-xs font-sm uppercase mx-4 mb-4
+        ">
+        {{ post.created_at }}
       </div>
       <div class="w-full border-t border-x-0 border-b-0"></div>
-      <form class="block">
-        <div class="flex">
-          <input type="text" name="comment" id="comment"
-                 class="bg-transparent outline-0 focus:ring-0 border-0 text-gray-900 text-sm block w-full p-2.5"
-                 placeholder="Add a comment..." required>
-          <button type="submit"
-                  class="focus:outline-none h-full text-sky-500 bg-transparent font-medium rounded-lg text-sm px-5 py-2.5 mb-2">
-            Post
-          </button>
-        </div>
-      </form>
+      <comment-form :post-id="post.id"/>
     </div>
   </div>
 </template>
 <script>
 import {ref, computed} from "vue";
-import {useStore} from "vuex";
 import UserProfile from './UserProfile.vue'
-import usePost from "../composables/posts.js";
+import CommentForm from "../pages/Comment/CommentForm.vue";
+import LikeButton from "./LikeButton.vue";
 
 export default {
-  components: {UserProfile},
+  components: {LikeButton, CommentForm, UserProfile},
   name: 'PostCard',
   props: ['post'],
   setup(props) {
-    const store = useStore()
-    const {likePost, isProcessing} = usePost()
-
-    const token = computed(() => store.getters.token);
-
-    const isLiked = ref(props.post.likes)
-
-    const likeColor = computed(() => {
-      return isLiked.value.length > 0 ? 'fa1414' : '262626'
-    })
 
     const backend_uri = `${import.meta.env.VITE_API_URI}`
 
-    const count_likes = ref(props.post.likes_count)
+    // For Dropdown
+    const IsDropdownActive = ref(false)
 
-    const onLikePostHandler = async (auth_token, post) => {
-      const res = await likePost(auth_token, post.id)
-
-      // Check if liked or unliked
-      if (res.attached.length > 0) {
-        count_likes.value = count_likes.value + 1
-        isLiked.value.push(1)
-
-      } else {
-        count_likes.value = count_likes.value - 1
-        isLiked.value = []
-      }
-
+    const toggleDropdown = () => {
+      IsDropdownActive.value = !IsDropdownActive.value
     }
 
     return {
       backend_uri,
-      likePost,
-      token,
-      onLikePostHandler,
-      count_likes,
-      isProcessing,
-      likeColor
+      IsDropdownActive,
+      toggleDropdown
     }
   },
 }
