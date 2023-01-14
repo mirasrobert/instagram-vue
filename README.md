@@ -1,7 +1,33 @@
-# Vue 3 + Vite
+![LOGO!](https://1000logos.net/wp-content/uploads/2017/02/Instagram-Logo.png)
+<p style="text-align: center">
+Instagram Clone built using Laravel and VueJS with Vite.
+</p>
+<br>
+Screenshots:
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Login:
+![LOGIN!](screenshots/Instagram_Login.png)
 
-## Recommended IDE Setup
+Register:
+![Register!](screenshots/Instagram_Register.png)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+News Feed:
+![Home!](screenshots/Instagram_Home.png)
+
+Profile:
+![Profile!](screenshots/Instagram_Profile.png)
+
+Edit Profile:
+![EditProfile!](screenshots/Instagram_EditProfile.png)
+
+Post and Comment:
+![Post!](screenshots/Instagram_Post.png)
+
+Add Post:
+![AddPost!](screenshots/Instagram_AddPost.png)
+
+<br>
+For the Laravel/Back-End Code:
+<code>
+https://github.com/mirasrobert/instagram-laravel
+</code>
